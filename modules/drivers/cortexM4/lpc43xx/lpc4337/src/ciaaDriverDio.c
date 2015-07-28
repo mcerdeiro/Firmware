@@ -365,6 +365,39 @@ void ciaa_lpc4337_writeOutput(uint32_t outputNumber, uint32_t value)
             Chip_GPIO_ClearValue(LPC_GPIO_PORT, 1, 1<<12);
          }
          break;
+      /* We start Keyboard GPIO Writings */
+      case 6:
+    	  if (value){
+    		  Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<0);
+    	  }
+    	  else{
+    		  Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<0);
+    	  }
+    	  break;
+      case 7:
+    	  if (value){
+    		  Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<1);
+    	  }
+    	  else{
+    		  Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<1);
+    	  }
+    	  break;
+      case 8:
+    	  if (value){
+    		  Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<2);
+    	  }
+    	  else{
+    		  Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<2);
+    	  }
+    	  break;
+      case 9:
+    	  if (value){
+    		  Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<3);
+    	  }
+    	  else{
+    		  Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<3);
+    	  }
+    	  break;
    }
 #endif
 }
