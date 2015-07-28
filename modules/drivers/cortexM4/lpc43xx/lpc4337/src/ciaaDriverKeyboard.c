@@ -125,42 +125,6 @@ ciaaDriverKeyboard_keybType ciaaDriverKeyboard_keyb;
 
 /*==================[internal functions definition]==========================*/
 
-void ciaa_lpc4337_Keyboard_init(void)
-{
-   Chip_GPIO_Init(LPC_GPIO_PORT);
-
-#if (BOARD == ciaa_nxp)
-   /* GPIO */
-
-#elif (BOARD == edu_ciaa_nxp)
-   /* GPIO */
-
-#if (CIAA_PNCH_USER_INTERFACE == CIAA_ENABLE)
-   /* Keyboard Initialization */
-     Chip_SCU_PinMux(1,5,MD_PUP|MD_EZI|MD_ZI,FUNC0);   /* GPIO1[8],  T_COL0 */
-     Chip_SCU_PinMux(7,4,MD_PUP|MD_EZI|MD_ZI,FUNC0);   /* GPIO3[12], T_COL1 */
-     Chip_SCU_PinMux(7,5,MD_PUP|MD_EZI|MD_ZI,FUNC0);   /* GPIO3[13], T_COL2 */
-     Chip_SCU_PinMux(6,12,MD_PUP|MD_EZI|MD_ZI,FUNC0);  /* GPIO2[8],  T_COL3 */
-
-     Chip_SCU_PinMux(4,0,MD_PUP,FUNC0);   /* GPIO2[0],  T_FIL0 */
-     Chip_SCU_PinMux(4,1,MD_PUP,FUNC0);   /* GPIO2[1],  T_FIL1 */
-     Chip_SCU_PinMux(4,2,MD_PUP,FUNC0);   /* GPIO2[2],  T_FIL2 */
-     Chip_SCU_PinMux(4,3,MD_PUP,FUNC0);   /* GPIO2[3],  T_FIL3 */
-
-     Chip_GPIO_SetDir(LPC_GPIO_PORT, 2,(1<<0)|(1<<1)|(1<<2)|(1<<3),1);
-
-     Chip_GPIO_SetDir(LPC_GPIO_PORT, 1,(1<<8),0);
-     Chip_GPIO_SetDir(LPC_GPIO_PORT, 3,(1<<12)|(1<<13),0);
-     Chip_GPIO_SetDir(LPC_GPIO_PORT, 2,(1<<8),0);
-
-     Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2,(1<<0)|(1<<1)|(1<<2)|(1<<3));
-#endif
-
-#else
-   #error please define BOARD variable!
-#endif
-}
-
 void ciaa_lpc4337_writeKeyboard(uint32_t outputNumber, uint32_t value)
 {
 #if (BOARD == edu_ciaa_nxp)
