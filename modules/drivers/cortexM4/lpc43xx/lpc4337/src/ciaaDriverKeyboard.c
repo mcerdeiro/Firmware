@@ -125,56 +125,7 @@ ciaaDriverKeyboard_keybType ciaaDriverKeyboard_keyb;
 
 /*==================[internal functions definition]==========================*/
 
-void ciaa_lpc4337_writeKeyboard(uint32_t outputNumber, uint32_t value)
-{
-#if (BOARD == edu_ciaa_nxp)
-#if (CIAA_PNCH_USER_INTERFACE == CIAA_ENABLE)
-	switch(outputNumber)
-	   {
-	      case TEC_FIL0: /* FILA 0 */
-	         if(value)
-	         {
-	            Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<0);
-	         }
-	         else
-	         {
-	            Chip_GPIO_ClearValue(LPC_GPIO_PORT,2, 1<<0);
-	         }
-	         break;
-	      case TEC_FIL1: /* FILA 1 */
-	         if(value)
-	         {
-	            Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<1);
-	         }
-	         else
-	         {
-	            Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<1);
-	         }
-	         break;
-	      case TEC_FIL2: /* FILA 2 */
-	         if(value)
-	         {
-	            Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<2);
-	         }
-	         else
-	         {
-	            Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<2);
-	         }
-	         break;
-	      case TEC_FIL3: /* FILA 3 */
-	         if(value)
-	         {
-	            Chip_GPIO_SetValue(LPC_GPIO_PORT, 2, 1<<3);
-	         }
-	         else
-	         {
-	            Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2, 1<<3);
-	         }
-	         break;
-	     }
-#endif
-#endif
-}
+
 
 /*==================[external functions definition]==========================*/
 extern ciaaDevices_deviceType * ciaaDriverKeyboard_open(char const * path,

@@ -69,6 +69,8 @@ typedef struct  {
    uint8_t countOfDevices;
 } ciaaDriverConstType;
 
+#define NUMBER_OF_GPIO 10
+
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
@@ -113,10 +115,10 @@ static ciaaDriverConstType const ciaaDriverDioConst = {
 };
 
 /*==================[external data definition]===============================*/
-/** \brief Dio 0 */
+/** \brief Dio 0 --> inputs */
 ciaaDriverDio_dioType ciaaDriverDio_dio0;
 
-/** \brief Dio 1 */
+/** \brief Dio 1 --> outputs */
 ciaaDriverDio_dioType ciaaDriverDio_dio1;
 
 /*==================[internal functions definition]==========================*/
@@ -419,7 +421,7 @@ extern int32_t ciaaDriverDio_ioctl(ciaaDevices_deviceType const * const device, 
    return -1;
 }
 
-extern ssize_t ciaaDriverDio_read(ciaaDevices_deviceType const * const device, uint8_t * buffer, size_t size)
+extern ssize_t ciaaDriverDio_read(ciaaDevices_deviceType const * const device, uint16_t * buffer, size_t size)
 {
    ssize_t ret = -1;
 
@@ -432,10 +434,15 @@ extern ssize_t ciaaDriverDio_read(ciaaDevices_deviceType const * const device, u
          buffer[0] = ~((uint8_t) ((Chip_GPIO_ReadValue(LPC_GPIO_PORT,3) & (0x0F<<11))>>7)
                               | (Chip_GPIO_ReadValue(LPC_GPIO_PORT,2) & 0x0F));
 #elif(BOARD == edu_ciaa_nxp)
-         buffer[0]  = Chip_GPIO_GetPinState(LPC_GPIO_PORT, 0, 4) ? 0 : 1;
-         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 0, 8) ? 0 : 2;
-         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 0, 9) ? 0 : 4;
-         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 1, 9) ? 0 : 8;
+         buffer[0]  = Chip_GPIO_GetPinState(LPC_GPIO_PORT, 0, 4) ? 1 : 0;
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 0, 8) ? 2 : 0;
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 0, 9) ? 4 : 0;
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 1, 9) ? 8 : 0;
+         /* Keyboard Columns reading */
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 2, 0) ? 16  : 0;
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 2, 1) ? 32  : 0;
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 2, 2) ? 64  : 0;
+         buffer[0] |= Chip_GPIO_GetPinState(LPC_GPIO_PORT, 2, 3) ? 128 : 0;
 #endif
 
          /* 1 byte read */
@@ -457,7 +464,7 @@ extern ssize_t ciaaDriverDio_read(ciaaDevices_deviceType const * const device, u
    return ret;
 }
 
-extern ssize_t ciaaDriverDio_write(ciaaDevices_deviceType const * const device, uint8_t const * const buffer, size_t const size)
+extern ssize_t ciaaDriverDio_write(ciaaDevices_deviceType const * const device, uint16_t const * const buffer, size_t const size)
 {
    ssize_t ret = -1;
 
@@ -471,8 +478,8 @@ extern ssize_t ciaaDriverDio_write(ciaaDevices_deviceType const * const device, 
       else if(device == ciaaDioDevices[1])
       {
          int32_t i;
-
-         for(i = 0; i < 8; i++)
+         /* We read all outputs states */
+         for(i = 0; i < NUMBER_OF_GPIO; i++)
          {
             ciaa_lpc4337_writeOutput(i, buffer[0] & (1 << i));
          }
