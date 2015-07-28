@@ -365,7 +365,7 @@ void ciaaKeyboard_MainTask(void){
  ** CHANGE_FUNCTION
   */
 
-void ciaaKeyboard_FunctionsInit(uint8_t change_keyb_func){
+void ciaaKeyboard_FunctionsInits(uint8_t change_keyb_func){
 
 	switch(change_keyb_func){
 	case CHANGE_FUNCTION:
