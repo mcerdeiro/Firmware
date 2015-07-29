@@ -487,7 +487,7 @@ extern ssize_t ciaaDriverDio_write(ciaaDevices_deviceType const * const device, 
          /* save actual output state in layer data */
          *((ciaaDriverDio_dioType *)device->layer) = buffer[0];
 
-         /* 1 byte written */
+         /* 10 bits written */
          ret = 1;
       }
       else
