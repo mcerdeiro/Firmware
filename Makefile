@@ -64,6 +64,7 @@
 # +--------------+---------------+----------------+--------------+---------------+
 #
 # Default values for ciaa_sim_ia64
+# this is a dummy change
 ifeq ($(BOARD),ciaa_sim_ia64)
 ARCH           ?= x86
 CPUTYPE        ?= ia64
