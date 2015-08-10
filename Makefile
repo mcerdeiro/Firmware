@@ -63,6 +63,7 @@
 # | mips         | pic32         | pic32mz        | gcc          | ciaa_pic      |
 # +--------------+---------------+----------------+--------------+---------------+
 #
+# Adding a dummy line
 # Default values for ciaa_sim_ia64
 ifeq ($(BOARD),ciaa_sim_ia64)
 ARCH           ?= x86
