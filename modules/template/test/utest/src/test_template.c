@@ -95,6 +95,24 @@ void test_Template_Sum_01(void)
    TEST_ASSERT_EQUAL_INT16(135, sum);
 }
 
+void test_Template_Sum_02(void)
+{
+   int16_t sum;
+
+   sum = Template_Sum16bits(4500,32000);
+
+   TEST_ASSERT_EQUAL_INT16(32767, sum);
+}
+
+void test_Template_Sum_03(void)
+{
+   int16_t sum;
+
+   sum = Template_Sum16bits(-4500,-32000);
+
+   TEST_ASSERT_EQUAL_INT16(-32768, sum);
+}
+
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
